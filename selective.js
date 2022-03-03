@@ -1,4 +1,4 @@
-const { benchmark } = require('./utils');
+const { benchmark, unsortedArray } = require('./utils');
 // Go through the array
 // For every item, loop over the remainder of the array to find the smallest
 // Swap the current item with the smallest found
@@ -82,4 +82,5 @@ function selectiveSort(arr, direction = 'asc') {
     return arr;
 }
 
-benchmark(selectiveSort, [69, 50, 102, 98, 500, 413], 'desc');
+benchmark(selectiveSort, unsortedArray, 'asc');
+benchmark(selectiveSort, unsortedArray, 'desc');

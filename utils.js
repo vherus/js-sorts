@@ -1,3 +1,5 @@
+const unsortedArray = [69, 50, 102, 98, 500, 413];
+
 function benchmark(func, ...args) {
     console.log('Input:', ...args);
 
@@ -15,5 +17,6 @@ function benchmark(func, ...args) {
 }
 
 module.exports = {
-    benchmark
+    benchmark,
+    unsortedArray
 }
