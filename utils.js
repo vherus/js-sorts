@@ -1,4 +1,4 @@
-const unsortedArray = [69, 50, 102, 98, 500, 413];
+const unsortedArray = [69, 50, 102, 98, 500, 413, 21, 380];
 
 function benchmark(func, ...args) {
     console.log('Input:', ...args);
