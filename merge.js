@@ -1,5 +1,48 @@
 const { benchmark, unsortedArray } = require('./utils');
 
+// O(n log n)
+function mergeSort(arr, direction = 'asc') {
+    if (arr.length === 1) {
+        return arr;
+    }
+
+    const halfWay = Math.ceil(arr.length / 2); // handle stray floats for uneven array lengths
+    const left = arr.slice(0, halfWay);
+    const right = arr.slice(halfWay);
+
+    const recursiveLeft = mergeSort(left, direction);
+    const recursiveRight = mergeSort(right, direction);
+
+    return merge(recursiveLeft, recursiveRight, direction);
+}
+
+function merge(left, right, direction) {
+    const result = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+    const isAscending = direction === 'asc';
+
+    while (leftIndex < left.length && rightIndex < right.length) {
+        if (left[leftIndex] < right[rightIndex]) {
+            result.push(isAscending ? left[leftIndex] : right[rightIndex]);
+            isAscending ? leftIndex++ : rightIndex++;
+            continue;
+        }
+
+        result.push(isAscending ? right[rightIndex] : left[leftIndex]);
+        isAscending ? rightIndex++ : leftIndex++;
+        continue;
+    }
+
+    const leftRemainder = left.slice(leftIndex);
+    const rightRemainder = right.slice(rightIndex);
+
+    return result.concat(leftRemainder).concat(rightRemainder);
+}
+
+benchmark(mergeSort, unsortedArray, 'asc');
+benchmark(mergeSort, unsortedArray, 'desc');
+
 // Divide the array into 2 parts, recursively, until every single element is in it's own array
 // Sort the individual arrays and merge them together
 
@@ -94,43 +137,3 @@ function mergeBlind(left, right) {
 }
 
 // console.log(mergeSortBlind(unsortedArray));
-
-// O(n log n)
-function mergeSort(arr, direction = 'asc') {
-    if (arr.length === 1) {
-        return arr;
-    }
-
-    const halfWay = Math.ceil(arr.length / 2);
-    const left = arr.slice(0, halfWay);
-    const right = arr.slice(halfWay);
-
-    const recursiveLeft = mergeSort(left, direction);
-    const recursiveRight = mergeSort(right, direction);
-
-    return merge(recursiveLeft, recursiveRight, direction);
-}
-
-function merge(left, right, direction) {
-    const result = [];
-    let leftIndex = 0;
-    let rightIndex = 0;
-    const isAscending = direction === 'asc';
-
-    while (leftIndex < left.length && rightIndex < right.length) {
-        if (left[leftIndex] < right[rightIndex]) {
-            result.push(isAscending ? left[leftIndex] : right[rightIndex]);
-            isAscending ? leftIndex++ : rightIndex++;
-            continue;
-        }
-
-        result.push(isAscending ? right[rightIndex] : left[leftIndex]);
-        isAscending ? rightIndex++ : leftIndex++;
-        continue;
-    }
-
-    return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
-}
-
-benchmark(mergeSort, unsortedArray, 'asc');
-benchmark(mergeSort, unsortedArray, 'desc');

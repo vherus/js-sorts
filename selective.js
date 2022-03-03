@@ -1,4 +1,34 @@
 const { benchmark, unsortedArray } = require('./utils');
+
+// O(n2)
+function selectiveSort(arr, direction = 'asc') {
+    for (let i = 0; i < arr.length; i++) {
+        let smallestIndex = i;
+        let biggestIndex = i;
+
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[j] < arr[smallestIndex]) {
+                smallestIndex = j;
+            }
+
+            if (arr[j] > arr[biggestIndex]) {
+                biggestIndex = j;
+            }
+        }
+
+        const original = arr[i];
+        const replacement = arr[direction === 'asc' ? smallestIndex : biggestIndex];
+
+        arr[i] = replacement;
+        arr[direction === 'asc' ? smallestIndex : biggestIndex] = original;
+    }
+
+    return arr;
+}
+
+benchmark(selectiveSort, unsortedArray, 'asc');
+benchmark(selectiveSort, unsortedArray, 'desc');
+
 // Go through the array
 // For every item, loop over the remainder of the array to find the smallest
 // Swap the current item with the smallest found
@@ -55,32 +85,3 @@ function selectiveSortBlindAttempt(arr) {
 
     return arr;
 }
-
-// O(n2)
-function selectiveSort(arr, direction = 'asc') {
-    for (let i = 0; i < arr.length; i++) {
-        let smallestIndex = i;
-        let biggestIndex = i;
-
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[j] < arr[smallestIndex]) {
-                smallestIndex = j;
-            }
-
-            if (arr[j] > arr[biggestIndex]) {
-                biggestIndex = j;
-            }
-        }
-
-        const original = arr[i];
-        const replacement = arr[direction === 'asc' ? smallestIndex : biggestIndex];
-
-        arr[i] = replacement;
-        arr[direction === 'asc' ? smallestIndex : biggestIndex] = original;
-    }
-
-    return arr;
-}
-
-benchmark(selectiveSort, unsortedArray, 'asc');
-benchmark(selectiveSort, unsortedArray, 'desc');
