@@ -56,6 +56,7 @@ function selectiveSortBlindAttempt(arr) {
     return arr;
 }
 
+// O(n2)
 function selectiveSort(arr, direction = 'asc') {
     for (let i = 0; i < arr.length; i++) {
         let smallestIndex = i;
