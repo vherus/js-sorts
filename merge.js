@@ -31,7 +31,6 @@ function merge(left, right, direction) {
 
         result.push(isAscending ? right[rightIndex] : left[leftIndex]);
         isAscending ? rightIndex++ : leftIndex++;
-        continue;
     }
 
     const leftRemainder = left.slice(leftIndex);
